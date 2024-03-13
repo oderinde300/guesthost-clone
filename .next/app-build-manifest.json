@@ -16,11 +16,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/(create-listing)/add-vehicle-listing/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(create-listing)/add-vehicle-listing/page.js"
-    ],
     "/(new-home)/event-halls/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -40,6 +35,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/select-listing/page.js"
+    ],
+    "/(create-listing)/add-vehicle-listing/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(create-listing)/add-vehicle-listing/page.js"
     ]
   }
 }
