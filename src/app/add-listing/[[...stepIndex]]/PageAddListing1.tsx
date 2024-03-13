@@ -1,38 +1,34 @@
-'use client'
+"use client";
 import React, { FC, useEffect, useState } from "react";
 import Input from "@/shared/Input";
 import Select from "@/shared/Select";
 import FormItem from "../FormItem";
 import { fetchListingCategories } from "@/actions/listings";
-import { ListingCategoryInterface } from "@/interfaces";
+// import { ListingCategoryInterface } from "@/interfaces";
 
 export interface PageAddListing1Props {}
 
 const PageAddListing1: FC<PageAddListing1Props> = () => {
-
-  const [categories, setCategories] = useState<ListingCategoryInterface[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  // const [categories, setCategories] = useState<ListingCategoryInterface[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   useEffect(() => {
     // Fetch listing categories from your API
     const fetchCategories = async () => {
       try {
         const response = await fetchListingCategories(); // Replace with your API endpoint
-        const data = response.data.map((option: {slug: any, name: any}) => (
-          {
-            value: option.slug,
-            label: option.name
-          }
-        ))
-        setCategories(data);
+        const data = response.data.map((option: { slug: any; name: any }) => ({
+          value: option.slug,
+          label: option.name,
+        }));
+        // setCategories(data);
       } catch (error) {
-        console.error('Error fetching listing categories:', error);
+        console.error("Error fetching listing categories:", error);
       }
     };
 
     fetchCategories();
   }, []); // Empty dependency array ensures the effect runs once on mount
-
 
   return (
     <>
@@ -45,13 +41,13 @@ const PageAddListing1: FC<PageAddListing1Props> = () => {
           label="Choose a property type"
           desc="Hotel: Professional hospitality businesses that usually have a unique style or theme defining their brand and decor"
         >
-          <Select>
+          {/* <Select>
             {categories.map((category) => (
               <option key={category.value} value={category.value}>
                 {category.label}
               </option>
             ))}
-          </Select>
+          </Select> */}
         </FormItem>
         <FormItem
           label="Place name"
