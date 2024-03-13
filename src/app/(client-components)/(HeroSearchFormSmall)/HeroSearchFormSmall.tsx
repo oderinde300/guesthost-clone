@@ -6,8 +6,15 @@ import StaySearchForm from "./(stay-search-form)/StaySearchForm";
 import ExperiencesSearchForm from "./(experiences-search-form)/ExperiencesSearchForm";
 import RentalCarSearchForm from "./(car-search-form)/RentalCarSearchForm";
 import FlightSearchForm from "./(flight-search-form)/FlightSearchForm";
+import Link from "next/link";
 
-export type SearchTab = "Stays" | "Experiences" | "Cars" | "Flights";
+export type SearchTab =
+  | "Stays"
+  | "Experiences"
+  | "Cars"
+  | "Flights"
+  | "Event Halls"
+  | "Vehicles";
 
 export interface HeroSearchFormSmallProps {
   className?: string;
@@ -15,7 +22,8 @@ export interface HeroSearchFormSmallProps {
   onTabChange?: (tab: SearchTab) => void;
   defaultFieldFocus?: StaySearchFormFields;
 }
-const TABS: SearchTab[] = ["Stays", "Experiences", "Cars", "Flights"];
+// const TABS: SearchTab[] = ["Stays", "Experiences", "Cars", "Flights"];
+const TABS: SearchTab[] = ["Stays", "Event Halls", "Vehicles"];
 
 const HeroSearchFormSmall: FC<HeroSearchFormSmallProps> = ({
   className = "",
@@ -64,12 +72,12 @@ const HeroSearchFormSmall: FC<HeroSearchFormSmallProps> = ({
     switch (tabActive) {
       case "Stays":
         return <StaySearchForm defaultFieldFocus={defaultFieldFocus} />;
-      case "Experiences":
+      case "Event Halls":
         return <ExperiencesSearchForm />;
-      case "Cars":
+      case "Vehicles":
         return <RentalCarSearchForm />;
-      case "Flights":
-        return <FlightSearchForm />;
+      // case "Flights":
+      //   return <FlightSearchForm />;
 
       default:
         return null;

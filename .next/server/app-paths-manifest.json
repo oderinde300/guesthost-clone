@@ -1,1 +1,7 @@
-{}
+{
+  "/page": "app/page.js",
+  "/(create-listing)/add-vehicle-listing/page": "app/(create-listing)/add-vehicle-listing/page.js",
+  "/not-found": "app/not-found.js",
+  "/(new-home)/stays/page": "app/(new-home)/stays/page.js",
+  "/select-listing/page": "app/select-listing/page.js"
+}

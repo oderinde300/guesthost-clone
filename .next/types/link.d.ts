@@ -30,10 +30,13 @@ declare namespace __next_route_internal_types__ {
 
   type StaticRoutes = 
     | `/`
-    | `/account`
     | `/account-billing`
+    | `/account`
     | `/account-password`
     | `/account-savelists`
+    | `/listing-car`
+    | `/listing-car-map`
+    | `/add-vehicle-listing`
     | `/listing-experiences`
     | `/listing-experiences-map`
     | `/listing-flights`
@@ -42,6 +45,9 @@ declare namespace __next_route_internal_types__ {
     | `/listing-car-detail`
     | `/listing-experiences-detail`
     | `/listing-stay-detail`
+    | `/vehicles`
+    | `/event-halls`
+    | `/stays`
     | `/listing-real-estate`
     | `/listing-real-estate-map`
     | `/listing-stay`
@@ -52,13 +58,15 @@ declare namespace __next_route_internal_types__ {
     | `/blog`
     | `/checkout`
     | `/contact`
-    | `/listing-car`
-    | `/listing-car-map`
     | `/login`
     | `/pay-done`
     | `/signup`
     | `/subscription`
+    | `/select-listing`
   type DynamicRoutes<T extends string = string> = 
+    | `/add-event-listing/${OptionalCatchAllSlug<T>}`
+    | `/add-stays-listing/${OptionalCatchAllSlug<T>}`
+    | `/add-vehicle-listingsss/${OptionalCatchAllSlug<T>}`
     | `/add-listing/${OptionalCatchAllSlug<T>}`
     | `/blog/${CatchAllSlug<T>}`
 

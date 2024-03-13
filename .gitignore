@@ -1,0 +1,27 @@
+# Ignore Next.js build output
+.next/
+out/
+
+# Ignore environment files
+.env
+
+# Ignore development files
+node_modules/
+
+# Ignore package manager lock files
+yarn.lock
+package-lock.json
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore test coverage reports
+coverage/
+
+# Ignore built artifacts
+build/
+dist/
+
+# Ignore logs
+*.log

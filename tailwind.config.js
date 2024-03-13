@@ -70,6 +70,11 @@ module.exports = {
           900: customColors("--c-neutral-900"),
         },
       },
+      backgroundImage: {
+        "home-3": "url('/images/hero-right-3.png')",
+        "home-2": "url('/images/halls.jpg')",
+        "home-1": "url('/images/vehicles.jpeg')",
+      },
     },
   },
   variants: {

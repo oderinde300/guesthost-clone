@@ -151,10 +151,11 @@ function PageHome() {
     <main className="nc-PageHome relative overflow-hidden">
       {/* GLASSMOPHIN */}
       <BgGlassmorphism />
+      <SectionHero className="pt-10 lg:pt-16 lg:pb-16" />
 
       <div className="container relative space-y-24 mb-24 lg:space-y-28 lg:mb-28">
         {/* SECTION HERO */}
-        <SectionHero className="pt-10 lg:pt-16 lg:pb-16" />
+        {/* <SectionHero className="pt-10 lg:pt-16 lg:pb-16" /> */}
 
         {/* SECTION 1 */}
         <SectionSliderNewCategories categories={DEMO_CATS} />
@@ -163,11 +164,20 @@ function PageHome() {
         <SectionGridFeaturePlaces listingType="shortlet" cardType="card2" />
 
         {/* <SectionOurFeatures /> */}
-        <SectionGridFeaturePlaces listingType="event-venue" heading="See featured event venue" subHeading="Popular event venue that GuestnHost recommends for you" cardType="card2" />
+        <SectionGridFeaturePlaces
+          listingType="event-venue"
+          heading="See featured event venue"
+          subHeading="Popular event venue that GuestnHost recommends for you"
+          cardType="card2"
+        />
 
         {/* <SectionOurFeatures /> */}
-        <SectionGridFeaturePlaces listingType="automobile" heading="Browse featured automobile" subHeading="Popular automobile/cars that GuestnHost recommends for you" cardType="card2" />
-        
+        <SectionGridFeaturePlaces
+          listingType="automobile"
+          heading="Browse featured automobile"
+          subHeading="Popular automobile/cars that GuestnHost recommends for you"
+          cardType="card2"
+        />
 
         {/* <SectionHowItWork /> */}
 
