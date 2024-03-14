@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { FC, useEffect, useState } from "react";
 import facebookSvg from "@/images/Facebook.svg";
 import twitterSvg from "@/images/Twitter.svg";
@@ -8,8 +8,8 @@ import ButtonPrimary from "@/shared/ButtonPrimary";
 import Image from "next/image";
 import Link from "next/link";
 import { FieldValues, FieldError, useForm } from "react-hook-form";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import router, { useRouter } from "next/router";
 import authService from "@/services/authService";
 
@@ -34,44 +34,49 @@ const loginSocials = [
 ];
 
 const PageLogin: FC<PageLoginProps> = ({}) => {
-
-   // Check authentication status on initial render
+  // Check authentication status on initial render
   const isAuthenticated = authService.isAuthenticated();
 
   // Redirect to login page if not authenticated and trying to access a protected route
   useEffect(() => {
-    if (isAuthenticated && window.location.href.includes('/login')) {
-      window.location.href = '/account'
+    if (isAuthenticated && window.location.href.includes("/login")) {
+      window.location.href = "/account";
     }
   }, [isAuthenticated]);
 
-
-  const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>();
-  const [isSubmitting, setHasSubmitted] = useState<boolean>(false)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>();
+  const [isSubmitting, setHasSubmitted] = useState<boolean>(false);
 
   const onSubmit = (data: any) => {
     // Handle form submission, e.g., send data to API
-    console.log('Form data:', data);
-    setHasSubmitted(true)
-    
-    authService.login(data).then((response) => {
-      setHasSubmitted(false)
-      console.log("account response:", response)
-      toast.success('Account Logged In successfully!');
-       
-      setTimeout(() => {
-        // router.push('/dashboard');
-        window.location.href = '/account'
-      }, 5000);
-    }).catch((error) => {
-      console.log("account response error:", error)
-      toast.error('Error Logging in account. Please try again.');
-    }).finally(() => {
-      setHasSubmitted(false)
-    })
+    console.log("Form data:", data);
+    setHasSubmitted(true);
+
+    authService
+      .login(data)
+      .then((response: any) => {
+        setHasSubmitted(false);
+        console.log("account response:", response);
+        toast.success("Account Logged In successfully!");
+
+        setTimeout(() => {
+          // router.push('/dashboard');
+          window.location.href = "/account";
+        }, 5000);
+      })
+      .catch((error: any) => {
+        console.log("account response error:", error);
+        toast.error("Error Logging in account. Please try again.");
+      })
+      .finally(() => {
+        setHasSubmitted(false);
+      });
   };
 
-  
   return (
     <div className={`nc-PageLogin`}>
       <div className="container mb-24 lg:mb-32">
@@ -105,18 +110,31 @@ const PageLogin: FC<PageLoginProps> = ({}) => {
             <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
           </div> */}
           {/* FORM */}
-          <form className="grid grid-cols-1 gap-6" onSubmit={handleSubmit(onSubmit)}>
-          <label className="block">
+          <form
+            className="grid grid-cols-1 gap-6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">
                 Email address
               </span>
               <Input
                 type="email"
                 placeholder="something@example.com"
-                className={`mt-1 ${errors.email ? 'border-red-500' : ''}`}
-                {...register('email', { required: true, pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } })}
+                className={`mt-1 ${errors.email ? "border-red-500" : ""}`}
+                {...register("email", {
+                  required: true,
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Invalid email address",
+                  },
+                })}
               />
-              {errors.email && <p className="text-red-500 text-sm mt-1">{(errors.email as FieldError)?.message}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {(errors.email as FieldError)?.message}
+                </p>
+              )}
             </label>
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
@@ -128,10 +146,20 @@ const PageLogin: FC<PageLoginProps> = ({}) => {
               <Input
                 type="password"
                 placeholder="Enter Password"
-                className={`mt-1 ${errors.password ? 'border-red-500' : ''}`}
-                {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Password must be at least 6 characters' } })}
+                className={`mt-1 ${errors.password ? "border-red-500" : ""}`}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                })}
               />
-              {errors.password && <p className="text-red-500 text-sm mt-1">{(errors.name as FieldError)?.message}</p>}
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {(errors.name as FieldError)?.message}
+                </p>
+              )}
             </label>
             <ButtonPrimary type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Authenticating..." : "Login"}

@@ -18,7 +18,7 @@ const Page: FC<PageAddListing1Props> = () => {
       case "/add-stays-listing/1":
         setDisplayListing("Stays");
         break;
-      case "/add-event-listing/1":
+      case "/add-event-listing":
         setDisplayListing("Event Halls");
         break;
       case "/add-vehicle-listing":
@@ -61,7 +61,7 @@ const Page: FC<PageAddListing1Props> = () => {
                   </option>
 
                   <option value="/add-stays-listing/1">Stays</option>
-                  <option value="/add-event-listing/1">Event Halls</option>
+                  <option value="/add-event-listing">Event Halls</option>
                   <option value="/add-vehicle-listing">Vehicles</option>
                 </Select>
               </FormItem>
