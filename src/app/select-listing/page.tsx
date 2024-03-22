@@ -15,7 +15,7 @@ const Page: FC<PageAddListing1Props> = () => {
 
   useEffect(() => {
     switch (selectedValue) {
-      case "/add-stays-listing/1":
+      case "/add-stays-listing":
         setDisplayListing("Stays");
         break;
       case "/add-event-listing":
@@ -60,7 +60,7 @@ const Page: FC<PageAddListing1Props> = () => {
                     Select listing
                   </option>
 
-                  <option value="/add-stays-listing/1">Stays</option>
+                  <option value="/add-stays-listing">Stays</option>
                   <option value="/add-event-listing">Event Halls</option>
                   <option value="/add-vehicle-listing">Vehicles</option>
                 </Select>

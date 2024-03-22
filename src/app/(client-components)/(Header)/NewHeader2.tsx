@@ -5,6 +5,7 @@ import Logo from "@/shared/Logo";
 import MenuBar from "@/shared/MenuBar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import authService from "@/services/authService";
 
 interface Header3Props {
   className?: string;
@@ -22,8 +23,12 @@ interface Tab {
 
 const NewHeader2: FC<Header3Props> = ({ className = "" }) => {
   const pathname = usePathname();
-
+  const isAuthenticated = authService.isAuthenticated();
   const [activeTab, setActiveTab] = useState("");
+
+  const logout = () => {
+    authService.logout();
+  };
 
   useEffect(() => {
     console.log(window.location.pathname);
@@ -155,9 +160,10 @@ const NewHeader2: FC<Header3Props> = ({ className = "" }) => {
           </Link>
           <Link
             href={"/login"}
+            onClick={logout}
             className="self-center hidden xl:inline-flex px-4 py-2 border border-neutral-300 hover:border-neutral-400 dark:border-neutral-700 rounded-full items-center text-sm text-gray-700 dark:text-neutral-300 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
           >
-            Login
+            {isAuthenticated ? "Logout" : "Login"}
           </Link>
         </div>
       </div>

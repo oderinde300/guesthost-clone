@@ -1,15 +1,58 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import Input from "@/shared/Input";
+import ButtonSecondary from "@/shared/ButtonSecondary";
 
-export interface PageAddListing5Props {}
-
-const PageAddListing5: FC<PageAddListing5Props> = () => {
+export interface PageAddListing5Props {
+  formData: any[];
+  errors: any;
+  control: any;
+  register: any;
+  handleSubmit: any;
+  prevPageHandler: any;
+  nextPageHandler: any;
+  setFormData: any;
+  watch: any;
+  setError: any;
+  selectedFeatures: any;
+  setSelectedFeatures: any;
+  smoking: string;
+  pet: string;
+  cooking: string;
+  party: string;
+  setSmoking: any;
+  setCooking: any;
+  setPet: any;
+  setParty: any;
+}
+const PageAddListing5: FC<PageAddListing5Props> = ({
+  formData,
+  errors,
+  control,
+  register,
+  handleSubmit,
+  prevPageHandler,
+  nextPageHandler,
+  setFormData,
+  watch,
+  setError,
+  selectedFeatures,
+  setSelectedFeatures,
+  pet,
+  cooking,
+  party,
+  smoking,
+  setSmoking,
+  setCooking,
+  setPet,
+  setParty,
+}) => {
   const renderRadio = (
     name: string,
     id: string,
     label: string,
-    defaultChecked?: boolean
+    defaultChecked?: boolean,
+    handleChange?: any
   ) => {
     return (
       <div className="flex items-center">
@@ -17,6 +60,10 @@ const PageAddListing5: FC<PageAddListing5Props> = () => {
           defaultChecked={defaultChecked}
           id={id + name}
           name={name}
+          value={id}
+          onChange={() => {
+            handleChange(id);
+          }}
           type="radio"
           className="focus:ring-primary-500 h-6 w-6 text-primary-500 border-neutral-300 !checked:bg-primary-500 bg-transparent"
         />
@@ -41,6 +88,19 @@ const PageAddListing5: FC<PageAddListing5Props> = () => {
     );
   };
 
+  const smokingHandler = (name: string) => {
+    setSmoking(name);
+  };
+  const petHandler = (name: string) => {
+    setPet(name);
+  };
+  const partyHandler = (name: string) => {
+    setParty(name);
+  };
+  const cookingHandler = (name: string) => {
+    setCooking(name);
+  };
+
   return (
     <>
       <div>
@@ -53,16 +113,21 @@ const PageAddListing5: FC<PageAddListing5Props> = () => {
       </div>
       <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
       {/* FORM */}
-      <div className="space-y-8">
+      <form
+        className="space-y-8"
+        onSubmit={handleSubmit((data: any) => {
+          setFormData({ ...formData, ...data });
+          nextPageHandler();
+        })}
+      >
         {/* ITEM */}
         <div>
           <label className="text-lg font-semibold" htmlFor="">
-            General amenities
+            Smoking
           </label>
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {renderRadio("Smoking", "Do", "Do not allow")}
-            {renderRadio("Smoking", "Allow", "Allow", true)}
-            {renderRadio("Smoking", "Charge", "Charge")}
+            {renderRadio("Smoking", "Yes", "Yes", false, smokingHandler)}
+            {renderRadio("Smoking", "No", "No", true, smokingHandler)}
           </div>
         </div>
 
@@ -72,9 +137,8 @@ const PageAddListing5: FC<PageAddListing5Props> = () => {
             Pet
           </label>
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {renderRadio("Pet", "Do", "Do not allow")}
-            {renderRadio("Pet", "Allow", "Allow", true)}
-            {renderRadio("Pet", "Charge", "Charge")}
+            {renderRadio("Pet", "Yes", "Yes", false, petHandler)}
+            {renderRadio("Pet", "No", "No", true, petHandler)}
           </div>
         </div>
 
@@ -84,9 +148,8 @@ const PageAddListing5: FC<PageAddListing5Props> = () => {
             Party organizing
           </label>
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {renderRadio("Partyorganizing", "Do", "Do not allow")}
-            {renderRadio("Partyorganizing", "Allow", "Allow", true)}
-            {renderRadio("Partyorganizing", "Charge", "Charge")}
+            {renderRadio("Partyorganizing", "Yes", "Yes", false, partyHandler)}
+            {renderRadio("Partyorganizing", "No", "No", true, partyHandler)}
           </div>
         </div>
 
@@ -96,30 +159,18 @@ const PageAddListing5: FC<PageAddListing5Props> = () => {
             Cooking
           </label>
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {renderRadio("Cooking", "Do", "Do not allow")}
-            {renderRadio("Cooking", "Allow", "Allow", true)}
-            {renderRadio("Cooking", "Charge", "Charge")}
+            {renderRadio("Cooking", "Yes", "Yes", false, cookingHandler)}
+            {renderRadio("Cooking", "No", "No", true, cookingHandler)}
           </div>
         </div>
 
-        {/* ----------- */}
-        <div className=" border-b border-neutral-200 dark:border-neutral-700"></div>
-        <span className="block text-lg font-semibold">Additional rules</span>
-        <div className="flow-root">
-          <div className="-my-3 divide-y divide-neutral-100 dark:divide-neutral-800">
-            {renderNoInclude("No smoking in common areas")}
-            {renderNoInclude("Do not wear shoes/shoes in the house")}
-            {renderNoInclude("No cooking in the bedroom")}
-          </div>
+        <div className="flex justify-end space-x-5">
+          <ButtonSecondary type="button" onClick={prevPageHandler}>
+            Go back
+          </ButtonSecondary>
+          <ButtonPrimary type="submit">{"Continue"}</ButtonPrimary>
         </div>
-        <div className="flex flex-col sm:flex-row sm:justify-between space-y-3 sm:space-y-0 sm:space-x-5">
-          <Input className="!h-full" placeholder="No smoking..." />
-          <ButtonPrimary className="flex-shrink-0">
-            <i className="text-xl las la-plus"></i>
-            <span className="ml-3">Add tag</span>
-          </ButtonPrimary>
-        </div>
-      </div>
+      </form>
     </>
   );
 };

@@ -11,6 +11,7 @@ export interface NcInputNumberProps {
   onChange?: (value: number) => void;
   label?: string;
   desc?: string;
+  handleChnage?: any;
 }
 
 const NcInputNumber: FC<NcInputNumberProps> = ({
@@ -21,6 +22,7 @@ const NcInputNumber: FC<NcInputNumberProps> = ({
   onChange,
   label,
   desc,
+  handleChnage,
 }) => {
   const [value, setValue] = useState(defaultValue);
 
@@ -42,6 +44,8 @@ const NcInputNumber: FC<NcInputNumberProps> = ({
     });
     onChange && onChange(value + 1);
   };
+
+  handleChnage(value);
 
   const renderLabel = () => {
     return (

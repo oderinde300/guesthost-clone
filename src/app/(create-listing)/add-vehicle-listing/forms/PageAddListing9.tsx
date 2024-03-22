@@ -59,7 +59,7 @@ const PageAddListing9: FC<PageAddListing9Props> = ({
     const data1 = new FormData();
     data1.append("address", data?.address);
     data1.append("availability", formatDate(data?.availability));
-    data1.append("image[0]", data.image_0);
+    data1.append("cover_image", data.image_0);
     data1.append("image[1]", data?.image_1);
     data1.append("image[2]", data?.image_2);
     data1.append("image[3]", data?.image_3);

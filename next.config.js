@@ -35,13 +35,6 @@ const nextConfig = {
       },
     ],
   },
-<<<<<<< HEAD
-  eslint: {
-=======
-   eslint: {
->>>>>>> 9fa7f8da91308025100190a168c89e009b2a7d12
-    ignoreDuringBuilds: true,
-  },
 };
 
 module.exports = nextConfig;

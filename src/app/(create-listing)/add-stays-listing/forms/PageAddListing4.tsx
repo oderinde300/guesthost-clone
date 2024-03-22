@@ -180,25 +180,84 @@ const PageAddListing4: FC<PageAddListing4Props> = ({
                 }
               }}
             />
+            <Checkbox
+              label="Detergent"
+              name="Detergent"
+              defaultChecked={selectedFeatures.includes("Detergent")}
+              onChange={(e: any) => {
+                if (e === true) {
+                  selectedFeatures.push("Detergent");
+                } else {
+                  const filteredArray = selectedFeatures.filter(
+                    (element: string) => element !== "Detergent"
+                  );
+                  setSelectedFeatures(filteredArray);
+                }
+              }}
+            />
+            <Checkbox
+              label="Clothes dryer"
+              name="Clothes dryer"
+              defaultChecked={selectedFeatures.includes("Clothes dryer")}
+              onChange={(e: any) => {
+                if (e === true) {
+                  selectedFeatures.push("Clothes dryer");
+                } else {
+                  const filteredArray = selectedFeatures.filter(
+                    (element: string) => element !== "Clothes dryer"
+                  );
+                  setSelectedFeatures(filteredArray);
+                }
+              }}
+            />
+            <Checkbox
+              label="Baby cot"
+              name="Baby cot"
+              defaultChecked={selectedFeatures.includes("Baby cot")}
+              onChange={(e: any) => {
+                if (e === true) {
+                  selectedFeatures.push("Baby cot");
+                } else {
+                  const filteredArray = selectedFeatures.filter(
+                    (element: string) => element !== "Baby cot"
+                  );
+                  setSelectedFeatures(filteredArray);
+                }
+              }}
+            />
+            <Checkbox
+              label="Desk"
+              name="Desk"
+              defaultChecked={selectedFeatures.includes("Desk")}
+              onChange={(e: any) => {
+                if (e === true) {
+                  selectedFeatures.push("Desk");
+                } else {
+                  const filteredArray = selectedFeatures.filter(
+                    (element: string) => element !== "Desk"
+                  );
+                  setSelectedFeatures(filteredArray);
+                }
+              }}
+            />
+            <Checkbox
+              label="Fridge"
+              name="Fridge"
+              defaultChecked={selectedFeatures.includes("Fridge")}
+              onChange={(e: any) => {
+                if (e === true) {
+                  selectedFeatures.push("Fridge");
+                } else {
+                  const filteredArray = selectedFeatures.filter(
+                    (element: string) => element !== "Fridge"
+                  );
+                  setSelectedFeatures(filteredArray);
+                }
+              }}
+            />
           </div>
         </div>
 
-        <FormItem label="Number of Seats">
-          <Input
-            placeholder="4"
-            {...register("no_of_seats", {
-              required: {
-                value: true,
-                message: "Number of seats is required", // Set your custom error message
-              },
-            })}
-          />
-          {errors?.no_of_seats && (
-            <p className="text-red-500 text-sm mt-1">
-              {`${errors?.no_of_seats?.message}`}
-            </p>
-          )}
-        </FormItem>
         <div className="flex justify-end space-x-5">
           <ButtonSecondary type="button" onClick={prevPageHandler}>
             Go back

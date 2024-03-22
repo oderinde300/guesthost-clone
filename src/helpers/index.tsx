@@ -1,18 +1,18 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 
-const baseURL = "https://guest_demo.guestsnhost.com/";
+const baseUrl = "https://guest_demo.guestsnhost.com/";
 const token = Cookies.get("token");
 
-console.log(token);
-
 export const PostAPICall = (api: string, data: any) => {
+  console.log(token);
+
   axios
-    .post(`${baseURL}${api}`, data, {
+    .post(`${baseUrl}${api}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
-        // "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
     })
     .then((response) => {
@@ -24,3 +24,33 @@ export const PostAPICall = (api: string, data: any) => {
       toast.error("Error Logging in account. Please try again.");
     });
 };
+
+const callAPI = async (
+  url: string,
+  method: string,
+  body: any,
+  headers: any = {
+    "Content-Type": "application/json",
+  },
+  base?: boolean
+) => {
+  try {
+    const myUrl = base ? url : baseUrl + url;
+    console.log(myUrl);
+    const response = await axios({
+      url: `${myUrl}`,
+      method,
+      headers: {
+        ...headers,
+        // Add any additional headers if needed
+      },
+      data: body,
+    });
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    throw axiosError;
+  }
+};
+
+export default callAPI;

@@ -10,7 +10,8 @@ import DatePicker from "react-datepicker";
 import FormItem from "./FormItem";
 import Input from "@/shared/Input";
 import { Controller } from "react-hook-form";
-import { PostAPICall } from "@/helpers";
+import callAPI, { PostAPICall } from "@/helpers";
+import Cookies from "js-cookie";
 
 export interface PageAddListing9Props {
   formData: any[];
@@ -24,8 +25,28 @@ export interface PageAddListing9Props {
   watch: any;
   setError: any;
   selectedFeatures: any;
-  coverImgee: File;
+  setSelectedFeatures: any;
+  coverImgee: any;
+  setCoverImage: any;
+  image1: any;
+  image2: any;
+  image3: any;
+  setImage1: any;
+  setImage2: any;
+  setImage3: any;
   data2: any;
+  smoking: string;
+  pet: string;
+  cooking: string;
+  party: string;
+  setSmoking: any;
+  setCooking: any;
+  setPet: any;
+  setParty: any;
+  minNights: any;
+  setMinNights: any;
+  maxNights: any;
+  setMaxNights: any;
 }
 
 const PageAddListing9: FC<PageAddListing9Props> = ({
@@ -39,9 +60,19 @@ const PageAddListing9: FC<PageAddListing9Props> = ({
   setFormData,
   watch,
   setError,
+  pet,
+  cooking,
+  party,
+  smoking,
+  setSmoking,
+  setCooking,
+  setPet,
+  setParty,
+  minNights,
+  setMinNights,
+  maxNights,
+  setMaxNights,
   selectedFeatures,
-  coverImgee,
-  data2,
 }) => {
   function formatDate(inputDate: any) {
     const dateObject = new Date(inputDate);
@@ -53,33 +84,71 @@ const PageAddListing9: FC<PageAddListing9Props> = ({
     return `${year}/${month}/${day}`;
   }
 
-  const onSubmit = async (data: any) => {
-    console.log("Form data:", data);
-    const data1 = new FormData();
+  const [loading, setLoading] = useState<boolean>(false);
 
+  const onSubmit = async (data: any) => {
+    const data1 = new FormData();
     data1.append("title", data?.title);
     data1.append("address", data?.address);
-    data1.append("seat_capacity", data?.seat_capacity);
+    data1.append("rental_form", data?.rental_form);
     data1.append("availability", formatDate(data?.availability));
-    data1.append("cover_image]", data.image_0);
-    data1.append("image[1]", data?.image_1);
-    data1.append("image[2]", data?.image_2);
-    data1.append("image[3]", data?.image_3);
+    data1.append("cover_image", data.image_0);
+    data1.append("image[0]", data?.image_1);
+    data1.append("image[1]", data?.image_2);
+    data1.append("image[2]", data?.image_3);
     data1.append("key_features", JSON.stringify(selectedFeatures));
     data1.append("description", data?.description);
     data1.append("amount", data?.amount);
     data1.append("state", data?.state);
     data1.append("city", data?.city);
     data1.append("postal_code", data?.postal_code);
+    data1.append("cooking_allowed_status", cooking);
+    data1.append("party_allowed_status", party);
+    data1.append("pet_allowed_status", pet);
+    data1.append("smoking_allowed_status", smoking);
+    data1.append("min_nights", minNights);
+    data1.append("max_nights", maxNights);
+    data1.append("guests_no", data?.guests_no);
+    data1.append("bedrooms_no", data?.bedrooms_no);
+    data1.append("bathrooms_no", data?.bathrooms_no);
+
+    data1.append("beds_no", data?.beds_no);
+    data1.append("kitchen_no", data?.kitchen_no);
+    data1.append("size", data?.size);
 
     try {
-      PostAPICall("api/v1/listing/hall/create", data1);
-    } catch (err) {
+      const token2 = localStorage.getItem("token");
+      const token = Cookies.get("token");
+
+      console.log(token);
+      console.log(token2);
+      setLoading(true);
+      const response = await callAPI(
+        "api/v1/listing/shortlet/create",
+        "POST",
+        data1,
+        {
+          "Content-Type": "multipart/form-data",
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${token2}`,
+        }
+      );
+      console.log(response);
+      setLoading(false);
+    } catch (err: any) {
       console.log(err);
-    } finally {
-      console.log("submitted!");
+      setLoading(false);
     }
   };
+
+  const handleMinNights = (value: any) => {
+    setMinNights(value);
+  };
+  const handleMaxNights = (value: any) => {
+    setMaxNights(value);
+  };
+
+  console.log(loading);
 
   return (
     <>
@@ -95,22 +164,20 @@ const PageAddListing9: FC<PageAddListing9Props> = ({
         </span>
       </div>
       <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
-        <FormItem label="Amount">
-          <Input
-            placeholder="0.00"
-            {...register("amount", {
-              required: {
-                value: true,
-                message: "Amount is required", // Set your custom error message
-              },
-            })}
+        <div className="space-y-7">
+          {/* ITEM */}
+          <NcInputNumber
+            label="Nights min"
+            defaultValue={3}
+            handleChnage={handleMinNights}
           />
-          {errors?.amount && (
-            <p className="text-red-500 text-sm mt-1">
-              {`${errors?.amount?.message}`}
-            </p>
-          )}
-        </FormItem>
+          <NcInputNumber
+            label="Nights max"
+            defaultValue={3}
+            handleChnage={handleMaxNights}
+          />
+        </div>
+
         <FormItem label="Availability" desc="Select the availability date">
           <div className="addListingDatePickerExclude">
             <Controller
@@ -150,10 +217,16 @@ const PageAddListing9: FC<PageAddListing9Props> = ({
           </div>
         </FormItem>
         <div className="flex justify-end space-x-5">
-          <ButtonSecondary type="button" onClick={prevPageHandler}>
+          <ButtonSecondary
+            type="button"
+            onClick={prevPageHandler}
+            disabled={loading}
+          >
             Go back
           </ButtonSecondary>
-          <ButtonPrimary type="submit">{"Submit"}</ButtonPrimary>
+          <ButtonPrimary type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Submit"}
+          </ButtonPrimary>
         </div>
       </form>
     </>
