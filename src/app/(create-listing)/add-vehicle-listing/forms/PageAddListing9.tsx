@@ -10,7 +10,10 @@ import DatePicker from "react-datepicker";
 import FormItem from "./FormItem";
 import Input from "@/shared/Input";
 import { Controller } from "react-hook-form";
-import { PostAPICall } from "@/helpers";
+import callAPI, { PostAPICall } from "@/helpers";
+import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export interface PageAddListing9Props {
   formData: any[];
@@ -53,16 +56,19 @@ const PageAddListing9: FC<PageAddListing9Props> = ({
     return `${year}/${month}/${day}`;
   }
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const onSubmit = async (data: any) => {
     console.log("Form data:", data);
     console.log(data?.image_0);
     const data1 = new FormData();
     data1.append("address", data?.address);
+    data1.append("category", data?.category);
     data1.append("availability", formatDate(data?.availability));
     data1.append("cover_image", data.image_0);
-    data1.append("image[1]", data?.image_1);
-    data1.append("image[2]", data?.image_2);
-    data1.append("image[3]", data?.image_3);
+    data1.append("image[0]", data?.image_1);
+    data1.append("image[1]", data?.image_2);
+    data1.append("image[2]", data?.image_3);
     data1.append("key_features", JSON.stringify(selectedFeatures));
     data1.append("make", data?.make);
     data1.append("model", data?.model);
@@ -78,11 +84,27 @@ const PageAddListing9: FC<PageAddListing9Props> = ({
     data1.append("registered_car", "yes");
 
     try {
-      PostAPICall("api/v1/listing/vehicle/create", data1);
-    } catch (err) {
+      const token = Cookies.get("token");
+
+      setLoading(true);
+      const response = await callAPI(
+        "api/v1/listing/vehicle/create",
+        "POST",
+        data1,
+        {
+          "Content-Type": "multipart/form-data",
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      console.log(response);
+      toast.success(response?.message);
+
+      setLoading(false);
+    } catch (err: any) {
       console.log(err);
-    } finally {
-      console.log("submitted!");
+      toast.error(err?.response?.data?.message);
+      setLoading(false);
     }
   };
 
@@ -156,12 +178,19 @@ const PageAddListing9: FC<PageAddListing9Props> = ({
           </div>
         </FormItem>
         <div className="flex justify-end space-x-5">
-          <ButtonSecondary type="button" onClick={prevPageHandler}>
+          <ButtonSecondary
+            type="button"
+            onClick={prevPageHandler}
+            disabled={loading}
+          >
             Go back
           </ButtonSecondary>
-          <ButtonPrimary type="submit">{"Submit"}</ButtonPrimary>
+          <ButtonPrimary type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Submit"}
+          </ButtonPrimary>
         </div>
       </form>
+      <ToastContainer />
     </>
   );
 };

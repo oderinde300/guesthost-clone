@@ -41,7 +41,9 @@ const IndexPage = () => {
   };
 
   const [formData, setFormData] = useState<any>(initialData);
-  const [selectedFeatures, setSelectedFeatures] = useState<any[]>([]);
+  const [selectedFeatures, setSelectedFeatures] = useState<any[]>([
+    "Air conditioning",
+  ]);
   const [coverImgee, setCoverImage] = useState(null);
   const [image1, setImage1] = useState(null);
   const [image2, setImage2] = useState(null);

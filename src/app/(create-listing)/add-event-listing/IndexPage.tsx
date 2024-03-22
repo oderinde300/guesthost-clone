@@ -23,7 +23,6 @@ const IndexPage = () => {
     description: "",
     amount: "",
     availability: "",
-
     image: "",
     key_features_1: "",
     state: "",
@@ -32,7 +31,10 @@ const IndexPage = () => {
   };
 
   const [formData, setFormData] = useState<any>(initialData);
-  const [selectedFeatures, setSelectedFeatures] = useState<any[]>([]);
+  const [selectedFeatures, setSelectedFeatures] = useState<any[]>([
+    "Wifi",
+    "Internet",
+  ]);
   const [coverImgee, setCoverImage] = useState(null);
   const [image1, setImage1] = useState(null);
   const [image2, setImage2] = useState(null);

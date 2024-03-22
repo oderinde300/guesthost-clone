@@ -13,6 +13,9 @@ import { Controller } from "react-hook-form";
 import callAPI, { PostAPICall } from "@/helpers";
 import Cookies from "js-cookie";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export interface PageAddListing9Props {
   formData: any[];
   errors: any;
@@ -134,9 +137,12 @@ const PageAddListing9: FC<PageAddListing9Props> = ({
         }
       );
       console.log(response);
+      toast.success(response?.message);
+
       setLoading(false);
     } catch (err: any) {
       console.log(err);
+      toast.error(err?.response?.data?.message);
       setLoading(false);
     }
   };
@@ -229,6 +235,7 @@ const PageAddListing9: FC<PageAddListing9Props> = ({
           </ButtonPrimary>
         </div>
       </form>
+      <ToastContainer />
     </>
   );
 };
